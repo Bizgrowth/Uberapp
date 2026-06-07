@@ -1,0 +1,1381 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<title>JAX Driver Pro — 30-Day Playbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #0a0a0a;
+  --surface: #141414;
+  --surface2: #1e1e1e;
+  --surface3: #262626;
+  --border: rgba(255,255,255,0.08);
+  --border2: rgba(255,255,255,0.14);
+  --text: #f0f0f0;
+  --text2: #a0a0a0;
+  --text3: #666;
+  --accent: #f5c842;
+  --accent2: #e8a82a;
+  --blue: #3b8ef0;
+  --blue-soft: rgba(59,142,240,0.12);
+  --green: #3ecf6a;
+  --green-soft: rgba(62,207,106,0.12);
+  --red: #f05252;
+  --red-soft: rgba(240,82,82,0.12);
+  --orange: #f5834a;
+  --orange-soft: rgba(245,131,74,0.12);
+  --pink: #e070b0;
+  --pink-soft: rgba(224,112,176,0.12);
+  --purple: #9b6edf;
+  --purple-soft: rgba(155,110,223,0.12);
+  --radius: 14px;
+  --radius-sm: 8px;
+  --font-head: 'Space Grotesk', sans-serif;
+  --font-body: 'DM Sans', sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; -webkit-tap-highlight-color: transparent; }
+
+html, body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  font-size: 15px;
+  line-height: 1.5;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* APP SHELL */
+.app {
+  max-width: 430px;
+  margin: 0 auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  position: relative;
+}
+
+/* HEADER */
+.header {
+  padding: 20px 16px 12px;
+  border-bottom: 1px solid var(--border);
+  position: sticky;
+  top: 0;
+  background: rgba(10,10,10,0.95);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  z-index: 100;
+}
+
+.header-top {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+
+.app-logo {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-mark {
+  width: 32px;
+  height: 32px;
+  background: var(--accent);
+  border-radius: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 14px;
+  color: #0a0a0a;
+}
+
+.logo-text {
+  font-family: var(--font-head);
+  font-weight: 700;
+  font-size: 16px;
+  color: var(--text);
+}
+
+.logo-sub {
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 400;
+  display: block;
+}
+
+.date-chip {
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 5px 12px;
+  font-size: 12px;
+  color: var(--text2);
+  font-weight: 500;
+}
+
+/* TAB BAR */
+.tabs {
+  display: flex;
+  gap: 4px;
+  overflow-x: auto;
+  scrollbar-width: none;
+  padding-bottom: 2px;
+}
+.tabs::-webkit-scrollbar { display: none; }
+
+.tab {
+  flex: none;
+  padding: 7px 14px;
+  border-radius: 20px;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  white-space: nowrap;
+  color: var(--text3);
+  border: 1px solid transparent;
+  transition: all 0.18s ease;
+  letter-spacing: 0.3px;
+}
+
+.tab.active {
+  background: var(--accent);
+  color: #0a0a0a;
+}
+
+.tab:not(.active):hover {
+  color: var(--text2);
+  border-color: var(--border2);
+}
+
+/* CONTENT */
+.content {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+}
+
+.screen { display: none; }
+.screen.active { display: block; }
+
+/* CARDS */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+}
+
+.card-accent-blue { border-top: 3px solid var(--blue); }
+.card-accent-green { border-top: 3px solid var(--green); }
+.card-accent-yellow { border-top: 3px solid var(--accent); }
+.card-accent-pink { border-top: 3px solid var(--pink); }
+.card-accent-orange { border-top: 3px solid var(--orange); }
+
+.card-title {
+  font-family: var(--font-head);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 14px;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+}
+
+.card-icon {
+  width: 24px;
+  height: 24px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+}
+
+/* METRICS */
+.metric-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.metric {
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  text-align: center;
+}
+
+.metric-val {
+  font-family: var(--font-head);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  display: block;
+}
+
+.metric-lbl {
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 500;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  display: block;
+  margin-top: 2px;
+}
+
+/* BADGES */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 3px 9px;
+  border-radius: 20px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2px;
+}
+.badge-green { background: var(--green-soft); color: var(--green); }
+.badge-blue { background: var(--blue-soft); color: var(--blue); }
+.badge-yellow { background: rgba(245,200,66,0.15); color: var(--accent); }
+.badge-red { background: var(--red-soft); color: var(--red); }
+.badge-orange { background: var(--orange-soft); color: var(--orange); }
+.badge-pink { background: var(--pink-soft); color: var(--pink); }
+.badge-purple { background: var(--purple-soft); color: var(--purple); }
+
+/* TIME BLOCKS */
+.block {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  margin-bottom: 10px;
+}
+
+.block:last-child { margin-bottom: 0; }
+
+.time-pill {
+  flex: none;
+  min-width: 82px;
+  padding: 5px 8px;
+  border-radius: var(--radius-sm);
+  font-size: 10px;
+  font-weight: 700;
+  text-align: center;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
+}
+
+.block-content { flex: 1; }
+.block-title { font-size: 13px; font-weight: 600; color: var(--text); margin-bottom: 2px; }
+.block-sub { font-size: 12px; color: var(--text2); line-height: 1.4; }
+
+/* RULES */
+.rule {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 11px 0;
+  border-bottom: 1px solid var(--border);
+}
+.rule:last-child { border-bottom: none; padding-bottom: 0; }
+.rule:first-child { padding-top: 0; }
+
+.rule-dot {
+  flex: none;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 15px;
+  margin-top: 1px;
+}
+
+.rule-body { flex: 1; }
+.rule-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.rule-desc { font-size: 12px; color: var(--text2); margin-top: 2px; line-height: 1.4; }
+
+/* EVENTS */
+.event {
+  padding: 12px 0;
+  border-bottom: 1px solid var(--border);
+}
+.event:last-child { border-bottom: none; padding-bottom: 0; }
+.event:first-child { padding-top: 0; }
+
+.event-date { font-size: 10px; font-weight: 600; color: var(--text3); letter-spacing: 0.5px; text-transform: uppercase; margin-bottom: 4px; }
+.event-name { font-size: 14px; font-weight: 600; color: var(--text); margin-bottom: 4px; }
+.event-tip { font-size: 12px; color: var(--text2); line-height: 1.5; }
+
+.event-mega {
+  background: linear-gradient(135deg, rgba(245,200,66,0.1) 0%, rgba(245,131,74,0.08) 100%);
+  border: 1px solid rgba(245,200,66,0.2);
+  border-radius: var(--radius-sm);
+  padding: 12px;
+  margin-bottom: 10px;
+}
+
+/* ALERT BOX */
+.alert {
+  border-radius: var(--radius-sm);
+  padding: 11px 13px;
+  font-size: 12px;
+  line-height: 1.5;
+  margin-top: 12px;
+}
+.alert-blue { background: var(--blue-soft); color: #7ab8f8; border-left: 3px solid var(--blue); }
+.alert-yellow { background: rgba(245,200,66,0.1); color: var(--accent); border-left: 3px solid var(--accent); }
+.alert-green { background: var(--green-soft); color: var(--green); border-left: 3px solid var(--green); }
+.alert-pink { background: var(--pink-soft); color: var(--pink); border-left: 3px solid var(--pink); }
+
+/* PROGRESS BAR */
+.prog-wrap { margin-bottom: 14px; }
+.prog-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
+.prog-label { font-size: 13px; font-weight: 500; color: var(--text); }
+.prog-bar { height: 6px; background: var(--surface3); border-radius: 3px; overflow: hidden; }
+.prog-fill { height: 100%; border-radius: 3px; }
+.prog-note { font-size: 11px; color: var(--text3); margin-top: 4px; line-height: 1.4; }
+
+/* DIVIDER */
+.divider { height: 1px; background: var(--border); margin: 12px 0; }
+
+/* SECTION LABEL */
+.section-label {
+  font-size: 10px;
+  font-weight: 700;
+  color: var(--text3);
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+/* LOCATION TAGS */
+.tag-row { display: flex; flex-wrap: wrap; gap: 6px; }
+
+.loc-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: 20px;
+  padding: 5px 10px;
+  font-size: 11px;
+  font-weight: 500;
+  color: var(--text2);
+}
+
+.loc-dot { width: 7px; height: 7px; border-radius: 50%; flex: none; }
+
+/* SPECIAL HIGHLIGHT */
+.highlight-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: var(--surface2);
+  border-radius: var(--radius-sm);
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.highlight-left { font-size: 13px; font-weight: 500; color: var(--text); }
+.highlight-right { font-size: 13px; font-weight: 700; color: var(--accent); }
+
+/* SELECT */
+select {
+  width: 100%;
+  background: var(--surface2);
+  border: 1px solid var(--border2);
+  border-radius: var(--radius-sm);
+  padding: 11px 14px;
+  font-size: 14px;
+  font-family: var(--font-body);
+  font-weight: 500;
+  color: var(--text);
+  margin-bottom: 14px;
+  cursor: pointer;
+  outline: none;
+  appearance: none;
+  -webkit-appearance: none;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%23666' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 14px center;
+  padding-right: 36px;
+}
+
+select:focus { border-color: var(--accent); }
+
+/* BOTTOM NAV */
+.bottom-nav {
+  position: sticky;
+  bottom: 0;
+  background: rgba(10,10,10,0.97);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border-top: 1px solid var(--border);
+  display: flex;
+  padding: 8px 4px 20px;
+}
+
+.nav-btn {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 8px 4px;
+  cursor: pointer;
+  border-radius: var(--radius-sm);
+  transition: all 0.15s;
+  border: none;
+  background: transparent;
+  color: var(--text3);
+}
+
+.nav-btn.active { color: var(--accent); }
+.nav-btn svg { width: 22px; height: 22px; stroke-width: 1.8; }
+.nav-label { font-size: 10px; font-weight: 600; letter-spacing: 0.3px; }
+
+/* LAUNCH BANNER */
+.launch-banner {
+  background: linear-gradient(135deg, #f5c842, #f5834a);
+  border-radius: var(--radius);
+  padding: 16px;
+  margin-bottom: 12px;
+  color: #0a0a0a;
+}
+
+.launch-banner h2 {
+  font-family: var(--font-head);
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 4px;
+}
+
+.launch-banner p { font-size: 13px; opacity: 0.8; }
+
+/* EARNING STRIP */
+.earn-strip {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 12px;
+}
+
+.earn-card {
+  flex: 1;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-sm);
+  padding: 12px 8px;
+  text-align: center;
+}
+
+.earn-val {
+  font-family: var(--font-head);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--accent);
+  display: block;
+}
+
+.earn-lbl {
+  font-size: 10px;
+  color: var(--text3);
+  font-weight: 500;
+  letter-spacing: 0.4px;
+  text-transform: uppercase;
+}
+
+/* PULSE DOT */
+.pulse {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--green);
+  position: relative;
+}
+
+.pulse::after {
+  content: '';
+  position: absolute;
+  top: -3px; left: -3px;
+  width: 14px; height: 14px;
+  border-radius: 50%;
+  background: var(--green);
+  opacity: 0.3;
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.3; }
+  70% { transform: scale(1.8); opacity: 0; }
+  100% { transform: scale(1); opacity: 0; }
+}
+
+/* STEP LIST */
+.step-list { counter-reset: steps; }
+.step-item {
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  padding: 10px 0;
+  border-bottom: 1px solid var(--border);
+  counter-increment: steps;
+}
+.step-item:last-child { border-bottom: none; padding-bottom: 0; }
+.step-num {
+  flex: none;
+  width: 24px;
+  height: 24px;
+  border-radius: 50%;
+  background: var(--accent);
+  color: #0a0a0a;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-head);
+}
+.step-body { flex: 1; }
+.step-title { font-size: 13px; font-weight: 600; color: var(--text); }
+.step-desc { font-size: 12px; color: var(--text2); line-height: 1.4; margin-top: 2px; }
+
+/* PAGE TITLE */
+.page-title {
+  font-family: var(--font-head);
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+.page-sub {
+  font-size: 13px;
+  color: var(--text2);
+  margin-bottom: 16px;
+}
+
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-top">
+      <div class="app-logo">
+        <div class="logo-mark">JP</div>
+        <div>
+          <span class="logo-text">JAX Driver Pro</span>
+          <span class="logo-sub">30-Day Income Playbook</span>
+        </div>
+      </div>
+      <div class="date-chip" id="live-date">Loading...</div>
+    </div>
+    <div class="tabs" id="tab-bar">
+      <div class="tab active" onclick="switchTab('today',this)">Today</div>
+      <div class="tab" onclick="switchTab('schedule',this)">Schedule</div>
+      <div class="tab" onclick="switchTab('rules',this)">Ride Rules</div>
+      <div class="tab" onclick="switchTab('events',this)">Events</div>
+      <div class="tab" onclick="switchTab('tips',this)">Pro Tips</div>
+      <div class="tab" onclick="switchTab('earnings',this)">Earnings</div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="content">
+
+    <!-- TODAY -->
+    <div id="screen-today" class="screen active">
+      <div class="launch-banner">
+        <h2>🚗 Night Launch — Jun 7</h2>
+        <p>Your 30-day JAX income journey starts at 10pm tonight. Let's go.</p>
+      </div>
+
+      <div class="earn-strip">
+        <div class="earn-card">
+          <span class="earn-val">$80+</span>
+          <span class="earn-lbl">Tonight target</span>
+        </div>
+        <div class="earn-card">
+          <span class="earn-val">$900</span>
+          <span class="earn-lbl">Weekly goal</span>
+        </div>
+        <div class="earn-card">
+          <span class="earn-val" style="color:var(--green)"><span class="pulse"></span> Live</span>
+          <span class="earn-lbl">Surge tracking</span>
+        </div>
+      </div>
+
+      <div class="card card-accent-blue">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--blue-soft); color:var(--blue)">🌙</div>
+          Tonight's Time Blocks
+        </div>
+        <div class="block">
+          <div class="time-pill" style="background:var(--blue-soft);color:var(--blue)">10–11 PM</div>
+          <div class="block-content">
+            <div class="block-title">Go online — UberX Rides</div>
+            <div class="block-sub">Position at Riverside / Five Points. Sunday night bar crowd heading home.</div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="time-pill" style="background:var(--pink-soft);color:var(--pink)">11PM–1AM</div>
+          <div class="block-content">
+            <div class="block-title">Enable Women Preference</div>
+            <div class="block-sub">Late-night female riders seek female drivers. Higher tips, safer interactions.</div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="time-pill" style="background:var(--green-soft);color:var(--green)">1–2 AM</div>
+          <div class="block-content">
+            <div class="block-title">Switch to Uber Eats</div>
+            <div class="block-sub">Late-night food orders surge. Position: Gate Pkwy, Southside, San Marco.</div>
+          </div>
+        </div>
+        <div class="alert alert-yellow">
+          ⭐ First shift priority: Accept your first 20 rides without declining. Build your rating baseline above 4.9 before being selective.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--orange-soft); color:var(--orange)">📍</div>
+          Hot Zones Tonight
+        </div>
+        <div class="section-label" style="margin-bottom:10px">Ride zones (10pm–1am)</div>
+        <div class="tag-row" style="margin-bottom:12px">
+          <div class="loc-tag"><div class="loc-dot" style="background:var(--blue)"></div>Five Points</div>
+          <div class="loc-tag"><div class="loc-dot" style="background:var(--blue)"></div>Riverside Ave</div>
+          <div class="loc-tag"><div class="loc-dot" style="background:var(--blue)"></div>San Marco Sq</div>
+          <div class="loc-tag"><div class="loc-dot" style="background:var(--blue)"></div>Avondale</div>
+        </div>
+        <div class="section-label" style="margin-bottom:10px">Eats zones (1–2am)</div>
+        <div class="tag-row">
+          <div class="loc-tag"><div class="loc-dot" style="background:var(--green)"></div>Gate Pkwy</div>
+          <div class="loc-tag"><div class="loc-dot" style="background:var(--green)"></div>Southside Blvd</div>
+          <div class="loc-tag"><div class="loc-dot" style="background:var(--green)"></div>San Marco</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--pink-soft); color:var(--pink)">👩</div>
+          Before You Drive — Activate These
+        </div>
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Enable Women Preference in Uber app</div>
+              <div class="step-desc">Settings → Women Preferences → On. Now live in Jacksonville.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Download Gridwise (free)</div>
+              <div class="step-desc">Tracks your earnings per hour in real time. Know when to stop and when to push.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">Stock 6 cold water bottles</div>
+              <div class="step-desc">Florida heat = instant 5-star boost. Cost: ~$0.15 each. Tip return: 10x.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Pre-cool your car</div>
+              <div class="step-desc">JAX June = 90°F+. Cold car is the #1 impression driver. Start AC 5 min before going online.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">5</div>
+            <div class="step-body">
+              <div class="step-title">Download Stride Tax app</div>
+              <div class="step-desc">Auto-tracks mileage. $0.65/mile deduction in 2026 = $4,000–$8,000 back at tax time.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- SCHEDULE -->
+    <div id="screen-schedule" class="screen">
+      <div class="page-title">Daily Schedule</div>
+      <div class="page-sub">Select any day for your full plan</div>
+      <select id="day-select" onchange="renderScheduleDay()"></select>
+      <div id="schedule-output"></div>
+    </div>
+
+    <!-- RULES -->
+    <div id="screen-rules" class="screen">
+      <div class="page-title">Ride Rules</div>
+      <div class="page-sub">When to accept, decline, and protect your metrics</div>
+
+      <div class="card card-accent-green">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--green-soft);color:var(--green)">✅</div>
+          Always Accept
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">✓</div>
+          <div class="rule-body">
+            <div class="rule-title">Rides showing $8+ upfront fare</div>
+            <div class="rule-desc">Even short rides in surge zones stack fast. Take it.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">✓</div>
+          <div class="rule-body">
+            <div class="rule-title">Any ride during surge 1.5x or higher</div>
+            <div class="rule-desc">Surge multiplies every mile you drive. Always profitable.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">✓</div>
+          <div class="rule-body">
+            <div class="rule-title">JAX Airport pickups</div>
+            <div class="rule-desc">10–20 min drives, $15–25 base fares. Consistent quality rides.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">✓</div>
+          <div class="rule-body">
+            <div class="rule-title">Rides during first 30 days of building rating</div>
+            <div class="rule-desc">Accept everything until you have 200+ rated trips. Rating is money.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-accent-yellow">
+        <div class="card-title">
+          <div class="card-icon" style="background:rgba(245,200,66,0.15);color:var(--accent)">⚠️</div>
+          Consider Declining
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:rgba(245,200,66,0.12);color:var(--accent)">—</div>
+          <div class="rule-body">
+            <div class="rule-title">Pickup 10+ min away, small fare showing</div>
+            <div class="rule-desc">Use Trip Radar (no acceptance rate hit) to check for better nearby rides first.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:rgba(245,200,66,0.12);color:var(--accent)">—</div>
+          <div class="rule-body">
+            <div class="rule-title">Rides toward rural dead zones</div>
+            <div class="rule-desc">Callahan, Bryceville, Baldwin — hard return. Only take if fare $20+.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:rgba(245,200,66,0.12);color:var(--accent)">—</div>
+          <div class="rule-body">
+            <div class="rule-title">Uber Eats orders under $2/mile ratio</div>
+            <div class="rule-desc">Quick math: Payout ÷ total miles. Under $2/mile? Skip it.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-accent-blue" style="border-top-color:var(--red)">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--red-soft);color:var(--red)">🛑</div>
+          Always Decline — Safety First
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--red-soft);color:var(--red)">✕</div>
+          <div class="rule-body">
+            <div class="rule-title">Any pickup that feels wrong</div>
+            <div class="rule-desc">Trust your gut immediately. Cancel within 2 min of accepting = no cancellation rate hit.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--red-soft);color:var(--red)">✕</div>
+          <div class="rule-body">
+            <div class="rule-title">Rider rated under 4.5 stars</div>
+            <div class="rule-desc">Low-rated riders = higher incident risk. You get to see their rating before accepting.</div>
+          </div>
+        </div>
+        <div class="alert alert-pink" style="margin-top:10px">
+          👩 Female driver tip: North side late-night pickups after 1am carry higher risk. Position in Southside, San Marco, and Beach zones instead after midnight.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--purple-soft);color:var(--purple)">📊</div>
+          Uber Pro Metrics — Protect These
+        </div>
+        <div class="prog-wrap">
+          <div class="prog-header">
+            <span class="prog-label">Acceptance Rate</span>
+            <span class="badge badge-yellow">Keep 70%+</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" style="width:70%;background:var(--accent)"></div></div>
+          <div class="prog-note">Gold status requires ~70%. Trip Radar declines DON'T count against you — use it to cherry-pick without penalty.</div>
+        </div>
+        <div class="prog-wrap">
+          <div class="prog-header">
+            <span class="prog-label">Star Rating</span>
+            <span class="badge badge-red">Keep 4.85+</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" style="width:97%;background:var(--red)"></div></div>
+          <div class="prog-note">Below 4.6 risks deactivation. One bad rating is diluted by 10 five-stars. Prioritize the experience every ride.</div>
+        </div>
+        <div class="prog-wrap">
+          <div class="prog-header">
+            <span class="prog-label">Cancellation Rate</span>
+            <span class="badge badge-green">Keep under 5%</span>
+          </div>
+          <div class="prog-bar"><div class="prog-fill" style="width:5%;background:var(--green)"></div></div>
+          <div class="prog-note">Cancel BEFORE accepting = no hit. Cancel after = counts. Rider cancels = no hit to you.</div>
+        </div>
+      </div>
+
+      <div class="card card-accent-green">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--green-soft);color:var(--green)">📦</div>
+          Uber Eats — Order Rules
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">✓</div>
+          <div class="rule-body">
+            <div class="rule-title">Accept if $2+ per mile</div>
+            <div class="rule-desc">$8 order ÷ 3 miles = $2.67/mi ✓ &nbsp; $6 order ÷ 5 miles = $1.20/mi ✗</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">✓</div>
+          <div class="rule-body">
+            <div class="rule-title">Prioritize stacked orders (2 items, 1 pickup)</div>
+            <div class="rule-desc">More pay, same drive time. Stack = gold.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--red-soft);color:var(--red)">✕</div>
+          <div class="rule-body">
+            <div class="rule-title">Skip orders under $6 base pay</div>
+            <div class="rule-desc">After gas and mileage wear, not worth your time or tires.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- EVENTS -->
+    <div id="screen-events" class="screen">
+      <div class="page-title">JAX Events Calendar</div>
+      <div class="page-sub">Jun 7 – Jul 7 · Position early · Earn more</div>
+
+      <div class="event-mega">
+        <div style="display:flex;align-items:center;justify-content:space-between;margin-bottom:6px">
+          <span class="badge badge-yellow">🎆 BIGGEST NIGHT</span>
+          <span style="font-size:11px;color:var(--accent);font-weight:700">Jul 4 · ALL DAY</span>
+        </div>
+        <div style="font-family:var(--font-head);font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px">
+          4th of July — America's 250th Anniversary
+        </div>
+        <div style="font-size:12px;color:var(--text2);line-height:1.5;margin-bottom:10px">
+          Riverfront Plaza: 4pm–9:30pm. Largest fireworks show in JAX history launches at 9pm from barge on St. Johns River. JAX Beach Pier: simultaneous show at 9pm. Thousands of riders exiting 9:30–11pm = 2–3x surge.
+        </div>
+        <div class="highlight-row" style="margin-bottom:6px">
+          <span class="highlight-left">Position by</span>
+          <span class="highlight-right">8:45 PM</span>
+        </div>
+        <div class="highlight-row">
+          <span class="highlight-left">Expected surge window</span>
+          <span class="highlight-right">9PM – 12AM</span>
+        </div>
+        <div class="alert alert-yellow" style="margin-top:10px">
+          Strategy: Position Riverside/Brooklyn at 8:45pm. Work fireworks exit until 12am. Both Downtown + JAX Beach are active simultaneously. Split your positioning by working downtown first (bigger crowd), then drive toward beach for second wave.
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:rgba(245,200,66,0.15);color:var(--accent)">📅</div>
+          Key Events — Jun 7 to Jul 7
+        </div>
+        <div class="event">
+          <div class="event-date">Every Sunday night — recurring</div>
+          <div class="event-name">Weekend Bar Wind-Down — Riverside & Five Points</div>
+          <div class="event-tip">Female riders peak 11pm–2am. Enable Women Preference. Tip avg 20–25% higher from female-to-female rides.</div>
+        </div>
+        <div class="event">
+          <div class="event-date">Every Monday AM — recurring</div>
+          <div class="event-name">Airport Business Rush — JAX Airport</div>
+          <div class="event-tip">Business travelers flying out 5–8am. Long fares $15–25, polite passengers, consistent tips. Best Monday morning move.</div>
+        </div>
+        <div class="event">
+          <div class="event-date">Every Thursday night — ongoing</div>
+          <div class="event-name">Electronic Thursdays at Myth Nightclub</div>
+          <div class="event-tip">Weekly club night. Crowd exits 1–2am. Position near Myth at 9pm. Women riders in large groups = excellent tips with Women Preference ON.</div>
+        </div>
+        <div class="event">
+          <div class="event-date">Every Tue–Thu evening</div>
+          <div class="event-name">Comedy Zone — 3130 Hartley Rd</div>
+          <div class="event-tip">Shows end 10pm. Happy riders = great tips. Position on Hartley Rd by 9:30pm. Quick clusters of ride requests.</div>
+        </div>
+        <div class="event">
+          <div class="event-date">June 2026 — ongoing monthly</div>
+          <div class="event-name">RnBMostly: Summer Nights</div>
+          <div class="event-tip">Jacksonville's top R&B monthly event series. Post-show 10pm–1am surge. Monitor Eventbrite for venue and date each month.</div>
+        </div>
+        <div class="event">
+          <div class="event-date">Jul 7 · Ongoing in July</div>
+          <div class="event-name">Kingfish Tournament — Jim King Park, IntraCoastal</div>
+          <div class="event-tip">Anglers starting 5–7am (early fares) + celebrating wins 6–10pm (late fares). Cash-tipping crowd. Good all-day opportunity.</div>
+        </div>
+        <div class="event">
+          <div class="event-date">Jul 9, 16, 23 — Thursday nights</div>
+          <div class="event-name">Electronic Thursdays: Kill Safari + VERSA at Myth</div>
+          <div class="event-tip">Named shows draw bigger crowds than regular Thursdays. Same positioning strategy — arrive by 9pm.</div>
+        </div>
+        <div class="event">
+          <div class="event-date">Jul 18, 2026</div>
+          <div class="event-name">CosCon 2026 — Currents Riverview</div>
+          <div class="event-tip">Cosplay/gaming convention. Riders in costume need rides all day. They tip well and are fun passengers. Full open-to-close opportunity.</div>
+        </div>
+        <div class="event">
+          <div class="event-date">Every Tue — 3–7pm</div>
+          <div class="event-name">JAX Beach Farmers Market — Seawalk Pavilion</div>
+          <div class="event-tip">Community event. Short local rides but consistent volume. Good for stacking Eats orders between ride pickups in the area.</div>
+        </div>
+      </div>
+
+      <div class="card" style="border-top:3px solid var(--blue)">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--blue-soft);color:var(--blue)">🏖️</div>
+          Beach Zone — June/July Summer Season
+        </div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:12px">
+          Summer beach season peaks every Fri–Sun. Key zones:<br><br>
+          <strong style="color:var(--text)">JAX Beach Pier</strong> — heavy Fri 5pm+, Sat–Sun 10am–8pm<br>
+          <strong style="color:var(--text)">Neptune Beach</strong> — family daytime, strong tips<br>
+          <strong style="color:var(--text)">Atlantic Beach</strong> — younger crowd, Fri–Sat nights<br>
+          <strong style="color:var(--text)">Ponte Vedra</strong> — high-income riders, excellent tips
+        </div>
+        <div class="alert alert-blue">
+          Strategy: Position JAX Beach at 9am Sat–Sun. Ride the wave through 2pm, then shift to Riverside/downtown for the evening surge window.
+        </div>
+      </div>
+    </div>
+
+    <!-- PRO TIPS -->
+    <div id="screen-tips" class="screen">
+      <div class="page-title">Pro Tips</div>
+      <div class="page-sub">Everything that separates $18/hr from $30/hr</div>
+
+      <div class="card card-accent-pink">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--pink-soft);color:var(--pink)">👩</div>
+          Your Female Driver Advantage — Use It
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--pink-soft);color:var(--pink)">♀</div>
+          <div class="rule-body">
+            <div class="rule-title">Enable Women Preference in app settings</div>
+            <div class="rule-desc">Now live in Jacksonville. 75% of female riders prefer a female driver. You get booked faster at night.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--pink-soft);color:var(--pink)">⭐</div>
+          <div class="rule-body">
+            <div class="rule-title">Female-to-female tips average 20–25% higher</div>
+            <div class="rule-desc">Especially on late-night rides. Women tip female drivers more generously and rate higher.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--pink-soft);color:var(--pink)">🌙</div>
+          <div class="rule-body">
+            <div class="rule-title">Night positioning — stick to lit commercial zones</div>
+            <div class="rule-desc">Riverside, San Marco, Gate Pkwy, JAX Beach strip. Well-lit, populated, police presence nearby.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--pink-soft);color:var(--pink)">🛡</div>
+          <div class="rule-body">
+            <div class="rule-title">Dashboard dashcam — non-negotiable</div>
+            <div class="rule-desc">$80–$150 investment. Protects you legally, deters bad behavior, often upgrades passenger behavior instantly.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-accent-green">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--green-soft);color:var(--green)">💰</div>
+          Tip Maximizers — In-Car Experience
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">🎵</div>
+          <div class="rule-body">
+            <div class="rule-title">Offer music choice as they get in</div>
+            <div class="rule-desc">"What would you like to listen to?" — Simple. Memorable. Drivers who do this rate 0.2 stars higher on average.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">💧</div>
+          <div class="rule-body">
+            <div class="rule-title">Cold water in a small cooler</div>
+            <div class="rule-desc">Florida heat. Offer one = near-guaranteed 5 stars. Cost: $0.15/bottle. Tip return: 10x.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">❄️</div>
+          <div class="rule-body">
+            <div class="rule-title">Pre-cool car before every pickup</div>
+            <div class="rule-desc">90°F+ summers. A cold car is your #1 first impression. Start AC 5 min early.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">🔌</div>
+          <div class="rule-body">
+            <div class="rule-title">USB-A + USB-C + Lightning charger</div>
+            <div class="rule-desc">Charging a rider on a long fare = easy tip. Multi-charger cable costs $12 total.</div>
+          </div>
+        </div>
+        <div class="rule">
+          <div class="rule-dot" style="background:var(--green-soft);color:var(--green)">🤫</div>
+          <div class="rule-body">
+            <div class="rule-title">Read the room — quiet vs chatty</div>
+            <div class="rule-desc">Greet warmly, then follow their energy. Comfortable silence is fine. Don't force conversation.</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-accent-blue">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--blue-soft);color:var(--blue)">🔄</div>
+          Rides vs Eats — When to Switch
+        </div>
+        <div class="block" style="margin-bottom:12px">
+          <div class="time-pill" style="background:var(--blue-soft);color:var(--blue);width:90px">Mon–Wed</div>
+          <div class="block-content">
+            <div class="block-title">70% Rides / 30% Eats</div>
+            <div class="block-sub">Airport runs, lunch rushes (11–1pm). Switch to Eats after 8pm.</div>
+          </div>
+        </div>
+        <div class="block" style="margin-bottom:12px">
+          <div class="time-pill" style="background:var(--purple-soft);color:var(--purple);width:90px">Thu–Fri</div>
+          <div class="block-content">
+            <div class="block-title">80% Rides / 20% Eats</div>
+            <div class="block-sub">Bar/event surge. Rides pay more. Eats only during midday lull 1–4pm.</div>
+          </div>
+        </div>
+        <div class="block">
+          <div class="time-pill" style="background:var(--pink-soft);color:var(--pink);width:90px">Sat–Sun</div>
+          <div class="block-content">
+            <div class="block-title">75% Rides / 25% Eats</div>
+            <div class="block-sub">Beach runs, brunch rides peak. Flip to Eats 2–5pm dead window.</div>
+          </div>
+        </div>
+        <div class="alert alert-blue" style="margin-top:10px">
+          Rule: When ride requests slow to 1 every 10+ min, flip to Eats immediately. Never sit idle — idle costs fuel and time.
+        </div>
+      </div>
+
+      <div class="card card-accent-yellow">
+        <div class="card-title">
+          <div class="card-icon" style="background:rgba(245,200,66,0.15);color:var(--accent)">⛽</div>
+          Gas Drag Strategy — JAX-Specific
+        </div>
+        <div style="font-size:13px;color:var(--text2);line-height:1.7;margin-bottom:12px">
+          Gas drag = % of your hourly earnings consumed by fuel. At $18/hr it's brutal. At $32/hr (surge) it drops dramatically. The fix isn't cheaper gas — it's smarter scheduling.
+        </div>
+        <div class="highlight-row"><span class="highlight-left">JAX peak windows</span><span class="highlight-right" style="font-size:12px;text-align:right">Weekday AM airport<br>Thu–Sat evenings<br>Sun airport returns</span></div>
+        <div class="alert alert-yellow" style="margin-top:10px">
+          A 4-hour block in a surge window earns more than 8 hours grinding slow Tuesday afternoon. Work smarter, not longer.
+        </div>
+      </div>
+    </div>
+
+    <!-- EARNINGS -->
+    <div id="screen-earnings" class="screen">
+      <div class="page-title">Earnings Targets</div>
+      <div class="page-sub">30-day income blueprint</div>
+
+      <div class="metric-grid">
+        <div class="metric">
+          <span class="metric-val" style="color:var(--accent)">$180</span>
+          <span class="metric-lbl">Daily target</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val" style="color:var(--accent)">$900+</span>
+          <span class="metric-lbl">Weekly goal</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val">$18/hr</span>
+          <span class="metric-lbl">Min acceptable</span>
+        </div>
+        <div class="metric">
+          <span class="metric-val">$30–50/hr</span>
+          <span class="metric-lbl">Surge potential</span>
+        </div>
+      </div>
+
+      <div class="card card-accent-yellow">
+        <div class="card-title">
+          <div class="card-icon" style="background:rgba(245,200,66,0.15);color:var(--accent)">📅</div>
+          Weekly Day-by-Day Targets
+        </div>
+        <div class="highlight-row"><span class="highlight-left">Monday</span><span class="highlight-right">$200</span></div>
+        <div class="highlight-row"><span class="highlight-left">Tuesday</span><span class="highlight-right">$160</span></div>
+        <div class="highlight-row"><span class="highlight-left">Wednesday</span><span class="highlight-right">$150</span></div>
+        <div class="highlight-row"><span class="highlight-left">Thursday</span><span class="highlight-right">$190</span></div>
+        <div class="highlight-row"><span class="highlight-left">Friday</span><span class="highlight-right" style="color:var(--green)">$250</span></div>
+        <div class="highlight-row"><span class="highlight-left">Saturday</span><span class="highlight-right" style="color:var(--green)">$260</span></div>
+        <div class="highlight-row" style="margin-bottom:0"><span class="highlight-left">Sunday (light)</span><span class="highlight-right">$140</span></div>
+        <div class="divider"></div>
+        <div class="highlight-row" style="background:rgba(245,200,66,0.1);border-radius:var(--radius-sm);padding:12px;margin-bottom:0">
+          <span class="highlight-left" style="font-weight:700">Weekly Total</span>
+          <span style="font-family:var(--font-head);font-size:20px;font-weight:700;color:var(--accent)">$1,350</span>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--blue-soft);color:var(--blue)">📲</div>
+          Required Apps & Tools
+        </div>
+        <div class="step-list">
+          <div class="step-item">
+            <div class="step-num">1</div>
+            <div class="step-body">
+              <div class="step-title">Gridwise (free)</div>
+              <div class="step-desc">Real-time earnings per hour across both apps. Know exactly when to stop or push harder.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">2</div>
+            <div class="step-body">
+              <div class="step-title">Stride Tax (free)</div>
+              <div class="step-desc">Auto-mileage tracking. $0.65/mile 2026 IRS deduction = $4,000–$8,000 back per year.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">3</div>
+            <div class="step-body">
+              <div class="step-title">GasBuddy (free)</div>
+              <div class="step-desc">Find cheapest gas near current location. Small daily saving adds up over 30 days.</div>
+            </div>
+          </div>
+          <div class="step-item">
+            <div class="step-num">4</div>
+            <div class="step-body">
+              <div class="step-title">Uber app — Women Preference ON</div>
+              <div class="step-desc">Settings → Women Preferences. Toggle on immediately. Never turn off during night shifts.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card card-accent-green">
+        <div class="card-title">
+          <div class="card-icon" style="background:var(--green-soft);color:var(--green)">🧾</div>
+          Tax Deductions — Track Everything
+        </div>
+        <div class="highlight-row"><span class="highlight-left">Mileage ($0.65/mile)</span><span class="highlight-right" style="color:var(--green)">$4–8K/yr</span></div>
+        <div class="highlight-row"><span class="highlight-left">Phone mount</span><span class="highlight-right">$20</span></div>
+        <div class="highlight-row"><span class="highlight-left">Dashcam</span><span class="highlight-right">$80–150</span></div>
+        <div class="highlight-row"><span class="highlight-left">Charger cables</span><span class="highlight-right">$12</span></div>
+        <div class="highlight-row"><span class="highlight-left">Water/refreshments</span><span class="highlight-right">~$30/mo</span></div>
+        <div class="highlight-row" style="margin-bottom:0"><span class="highlight-left">Car washes</span><span class="highlight-right">Track all</span></div>
+        <div class="alert alert-green" style="margin-top:10px">
+          You are self-employed. Every business expense reduces your taxable income. Track everything with receipts. See a tax pro in January.
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- BOTTOM NAV -->
+  <div class="bottom-nav">
+    <button class="nav-btn active" id="nav-today" onclick="switchTab('today',null,'today')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+      <span class="nav-label">Today</span>
+    </button>
+    <button class="nav-btn" id="nav-schedule" onclick="switchTab('schedule',null,'schedule')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><circle cx="3" cy="6" r="1" fill="currentColor"/><circle cx="3" cy="12" r="1" fill="currentColor"/><circle cx="3" cy="18" r="1" fill="currentColor"/></svg>
+      <span class="nav-label">Schedule</span>
+    </button>
+    <button class="nav-btn" id="nav-rules" onclick="switchTab('rules',null,'rules')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><polyline points="9 11 12 14 22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg>
+      <span class="nav-label">Rules</span>
+    </button>
+    <button class="nav-btn" id="nav-events" onclick="switchTab('events',null,'events')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span class="nav-label">Events</span>
+    </button>
+    <button class="nav-btn" id="nav-earnings" onclick="switchTab('earnings',null,'earnings')">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" xmlns="http://www.w3.org/2000/svg"><line x1="12" y1="1" x2="12" y2="23"/><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/></svg>
+      <span class="nav-label">Earnings</span>
+    </button>
+  </div>
+
+</div>
+
+<script>
+const DAY_DATA = [
+  {dow:0,label:'Sunday',mode:'Night Launch',goal:'$80',tip:'New driver: Accept everything tonight. Build your rating above 4.9 before being selective.',blocks:[
+    {t:'10–11 PM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Go live — UberX Rides',sub:'Riverside, Five Points. Sunday bar crowd heading home.'},
+    {t:'11PM–1AM',c:'#e070b0',bg:'rgba(224,112,176,0.12)',title:'Women Preference ON',sub:'Female riders peak late Sunday. Better tips, safer.'},
+    {t:'1–2 AM',c:'#3ecf6a',bg:'rgba(62,207,106,0.12)',title:'Switch to Uber Eats',sub:'Late-night food orders — Southside, Gate Pkwy.'}
+  ]},
+  {dow:1,label:'Monday',mode:'Full Day',goal:'$200',tip:'Full Mon is your highest weekday. Airport at dawn + evening bars = double surge.',blocks:[
+    {t:'5–8 AM',c:'#f5c842',bg:'rgba(245,200,66,0.12)',title:'JAX Airport surge — Rides',sub:'Business travelers. Long fares $15–25.'},
+    {t:'8–11 AM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Midtown / Downtown rides',sub:'Work commuters. Riverside, San Marco, Southpoint.'},
+    {t:'11AM–2PM',c:'#3ecf6a',bg:'rgba(62,207,106,0.12)',title:'Lunch Uber Eats run',sub:'Southside Blvd restaurant cluster.'},
+    {t:'2–4 PM',c:'#666',bg:'rgba(102,102,102,0.12)',title:'Rest + car care',sub:'Top off gas. Wipe interior. Restock water.'},
+    {t:'4–8 PM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Evening commute rides',sub:'Rides back home. Downtown → suburbs.'},
+    {t:'8PM–12AM',c:'#e070b0',bg:'rgba(224,112,176,0.12)',title:'Bar scene — Women Pref ON',sub:'Riverside, Five Points. Women Preference active.'}
+  ]},
+  {dow:2,label:'Tuesday',mode:'Weekday Rhythm',goal:'$160',tip:'Tue is slower — lean into Eats midday. Comedy Zone at night adds $30–40 bonus.',blocks:[
+    {t:'6–9 AM',c:'#f5c842',bg:'rgba(245,200,66,0.12)',title:'Airport + commuter rides',sub:'JAX Airport queue + Southpoint offices.'},
+    {t:'9–11 AM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Medical / errand rides',sub:'Mid-morning. Appointments, errands. Tip well.'},
+    {t:'11AM–1PM',c:'#3ecf6a',bg:'rgba(62,207,106,0.12)',title:'Lunch Eats — Gate Pkwy',sub:'Dense restaurant cluster. High order volume.'},
+    {t:'1–4 PM',c:'#3ecf6a',bg:'rgba(62,207,106,0.12)',title:'Slow window — Eats only',sub:'Slow rides. Stay on Eats. $2+/mile rule.'},
+    {t:'4–8 PM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Evening ride commute',sub:'Southside → downtown reverse commute.'},
+    {t:'8–10 PM',c:'#f5834a',bg:'rgba(245,131,74,0.12)',title:'Comedy Zone pickup',sub:'Position Hartley Rd 9:30pm. Shows end 10pm.'}
+  ]},
+  {dow:3,label:'Wednesday',mode:'Mid-Week',goal:'$150',tip:'Wednesday is a sleeper for tips. Date-night couples tip 20–30%. Keep the car clean.',blocks:[
+    {t:'6–9 AM',c:'#f5c842',bg:'rgba(245,200,66,0.12)',title:'Airport queue',sub:'Wed AM business travelers. JAX terminal.'},
+    {t:'9AM–12PM',c:'#3ecf6a',bg:'rgba(62,207,106,0.12)',title:'Eats — midtown cluster',sub:'Downtown, Riverside lunch prep.'},
+    {t:'12–3 PM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Afternoon rides',sub:'School pickups, appointments, hospital runs.'},
+    {t:'3–5 PM',c:'#666',bg:'rgba(102,102,102,0.12)',title:'Rest / admin',sub:'Check earnings, plan tomorrow, restock.'},
+    {t:'5–9 PM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Dinner rides',sub:'San Marco, Avondale. Date night crowd.'},
+    {t:'9PM–1AM',c:'#e070b0',bg:'rgba(224,112,176,0.12)',title:'Bar scene — Women Pref ON',sub:'Five Points, Riverside. Midweek drinking crowd.'}
+  ]},
+  {dow:4,label:'Thursday',mode:'Thurs Surge',goal:'$190',tip:'Thursday nights rival Friday. Myth Nightclub is your anchor — position nearby at 9pm.',blocks:[
+    {t:'5–8 AM',c:'#f5c842',bg:'rgba(245,200,66,0.12)',title:'Airport — early departures',sub:'Business travel peaks Thu morning.'},
+    {t:'8AM–12PM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Rides — commuter + errand',sub:'Normal weekday flow. Southside / Riverside.'},
+    {t:'12–2 PM',c:'#3ecf6a',bg:'rgba(62,207,106,0.12)',title:'Lunch Eats block',sub:'Fast midday deliveries.'},
+    {t:'5–9 PM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Happy hour → dinner rides',sub:'Strongest midweek evening. Riverside fills up.'},
+    {t:'9PM–2AM',c:'#e070b0',bg:'rgba(224,112,176,0.12)',title:'MYTH NIGHTCLUB — Electronic Thu',sub:'Women Pref ON. Surge 10pm–1am. Best Thu income.'}
+  ]},
+  {dow:5,label:'Friday',mode:'Big Friday',goal:'$250',tip:"Friday is your $250 day. Don't stop early. 10pm–2am is when the real money lands.",blocks:[
+    {t:'5–8 AM',c:'#f5c842',bg:'rgba(245,200,66,0.12)',title:'Airport — weekend departures',sub:'Heaviest airport traffic of the week.'},
+    {t:'8–11 AM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Beach-bound rides',sub:'JAX Beach, Atlantic Beach early crowd.'},
+    {t:'11AM–2PM',c:'#3ecf6a',bg:'rgba(62,207,106,0.12)',title:'Eats + lunch rides split',sub:'Gate Pkwy Eats zone best midday.'},
+    {t:'2–5 PM',c:'#666',bg:'rgba(102,102,102,0.12)',title:'Rest / recharge',sub:'Eat. Nap. Car prep. Big night ahead.'},
+    {t:'5–9 PM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Dinner + evening rides',sub:'Surge starts 6pm. Riverside / San Marco.'},
+    {t:'9PM–2AM',c:'#f5c842',bg:'rgba(245,200,66,0.15)',title:'PEAK EARNINGS — bar close',sub:'All zones active. Women Pref ON. $25–40/hr.'}
+  ]},
+  {dow:6,label:'Saturday',mode:'Beach Saturday',goal:'$260',tip:'Saturday is your highest-earning day. Beach mornings + bar nights = full target.',blocks:[
+    {t:'7–10 AM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Beach zone positioning',sub:'JAX Beach Pier, Neptune Beach. Early crowd.'},
+    {t:'10AM–2PM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Beach rides all morning',sub:'Family rides, hotel pickups, brunch runs.'},
+    {t:'2–5 PM',c:'#3ecf6a',bg:'rgba(62,207,106,0.12)',title:'Afternoon Eats block',sub:'Dead ride window. Flip to Uber Eats.'},
+    {t:'5–9 PM',c:'#3b8ef0',bg:'rgba(59,142,240,0.12)',title:'Evening dinner rides',sub:'Beach → restaurants → bars.'},
+    {t:'9PM–2AM',c:'#f5c842',bg:'rgba(245,200,66,0.15)',title:'Saturday night surge',sub:'Biggest night. $30–50/hr possible. Women Pref ON.'}
+  ]}
+];
+
+function getDayData(idx) {
+  const dow = (idx + 0) % 7;
+  return DAY_DATA[dow];
+}
+
+function buildSelect() {
+  const sel = document.getElementById('day-select');
+  const start = new Date(2026, 5, 7);
+  const specials = {
+    27: ' 🎆 Jul 4 — BIGGEST NIGHT',
+    4: ' 🏆 Thu Surge',
+    5: ' 🔥 Fri Peak',
+    6: ' ⭐ Sat Max'
+  };
+  for (let i = 0; i <= 30; i++) {
+    const d = new Date(start);
+    d.setDate(d.getDate() + i);
+    const label = d.toLocaleDateString('en-US', {weekday:'short',month:'short',day:'numeric'});
+    const opt = document.createElement('option');
+    opt.value = i;
+    const dow = d.getDay();
+    opt.textContent = (i === 0 ? '★ ' : '') + label + (specials[i] || specials[dow] || '');
+    sel.appendChild(opt);
+  }
+}
+
+function renderScheduleDay() {
+  const idx = parseInt(document.getElementById('day-select').value);
+  const d = new Date(2026, 5, 7);
+  d.setDate(d.getDate() + idx);
+  const data = getDayData(idx);
+  const isJul4 = (idx === 27);
+  const dateStr = d.toLocaleDateString('en-US', {weekday:'long',month:'long',day:'numeric'});
+
+  let extra = '';
+  if (isJul4) {
+    extra = `<div class="alert alert-yellow" style="margin-top:12px">
+      🎆 AMERICA'S 250TH — Largest fireworks show in Jacksonville history. Position at Riverside/Brooklyn by 8:45pm. Surge 9pm–12am = $40–60/hr possible. Work Downtown first, then Beach second wave.
+    </div>`;
+  }
+
+  let blocksHtml = data.blocks.map(b => `
+    <div class="block">
+      <div class="time-pill" style="background:${b.bg};color:${b.c}">${b.t}</div>
+      <div class="block-content">
+        <div class="block-title">${b.title}</div>
+        <div class="block-sub">${b.sub}</div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('schedule-output').innerHTML = `
+    <div class="card card-accent-blue">
+      <div class="card-title">📅 ${dateStr}</div>
+      <div class="metric-grid">
+        <div class="metric"><span class="metric-val" style="color:var(--accent)">${data.goal}</span><span class="metric-lbl">Daily Target</span></div>
+        <div class="metric"><span class="metric-val" style="font-size:14px">${data.mode}</span><span class="metric-lbl">Mode</span></div>
+      </div>
+      <div class="section-label">Time Blocks</div>
+      ${blocksHtml}
+      ${extra}
+      <div class="alert alert-blue" style="margin-top:12px">💡 ${data.tip}</div>
+    </div>`;
+}
+
+function switchTab(id, el, navId) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('screen-' + id).classList.add('active');
+  if (el) el.classList.add('active');
+  if (navId) {
+    const nb = document.getElementById('nav-' + navId);
+    if (nb) nb.classList.add('active');
+  }
+  const tabMap = {today:'today',schedule:'schedule',rules:'rules',events:'events',tips:'tips',earnings:'earnings'};
+  document.querySelectorAll('.tab').forEach(t => {
+    if (t.textContent.trim().toLowerCase().startsWith(id.slice(0,4))) t.classList.add('active');
+  });
+}
+
+function updateDate() {
+  const now = new Date();
+  const str = now.toLocaleDateString('en-US',{weekday:'short',month:'short',day:'numeric'});
+  document.getElementById('live-date').textContent = str;
+}
+
+buildSelect();
+renderScheduleDay();
+updateDate();
+setInterval(updateDate, 60000);
+</script>
+</body>
+</html>
